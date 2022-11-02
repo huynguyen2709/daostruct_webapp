@@ -3,25 +3,21 @@ import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { truncateText } from "../utils/index";
 
-const SpotLight = () => {
+const SpotLight = ({ lastestData }) => {
   return (
     <StyledContainer>
       <Row>
         <StyledLeftCol xs={12} md={6} xl={5}>
           <ul>
-            <Title>Title</Title>
-            <li>
-              Description Lorem ipsum dolor, sit amet consectetur adipisicing
-              elit. Ducimus officia, sit aspernatur veritatis quam illum
-              officiis obcaecati facere eos hic? Architecto autem quos odit
-              fugit non obcaecati mollitia. Hic, sit!
-            </li>
-            <li>Author</li>
+            <Title>{lastestData?.title}</Title>
+            <li>Description: {truncateText(lastestData?.explanation)}</li>
+            <li>Author: {lastestData?.copyright}</li>
           </ul>
         </StyledLeftCol>
         <StyledRightCol xs={12} md={6} xl={7}>
-          <Image />
+          <Image url={lastestData?.url}></Image>
         </StyledRightCol>
       </Row>
     </StyledContainer>
@@ -48,7 +44,7 @@ const StyledRightCol = styled(Col)`
 `;
 
 const Image = styled.div`
-  background-image: url("https://picsum.photos/200/300");
+  ${(props) => props.url && `background-image: url(${props.url})`};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
