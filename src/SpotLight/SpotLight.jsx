@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { truncateText } from "../utils/index";
+import { getUrl, truncateText } from "../utils/index";
 
 const SpotLight = ({ lastestData }) => {
   return (
@@ -17,7 +17,7 @@ const SpotLight = ({ lastestData }) => {
           </ul>
         </StyledLeftCol>
         <StyledRightCol xs={12} md={6} xl={7}>
-          <Image url={lastestData?.url}></Image>
+          <Image url={getUrl(lastestData)}></Image>
         </StyledRightCol>
       </Row>
     </StyledContainer>

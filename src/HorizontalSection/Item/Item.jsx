@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { getUrl } from "../../utils";
 
 function Item({ data }) {
   return (
     <CardContainer>
-      <CardImage src={data?.url} alt="Nasa Image" />
+      <CardImage src={getUrl(data)} alt="Nasa Image" />
       <CardContent>
         <TitleText>{data?.title}</TitleText>
         <Text>{data?.date}</Text>
