@@ -71,8 +71,17 @@ function App() {
           <HorizontalSection
             previousData={getSevenPrevious(data)}
           ></HorizontalSection>
-          <div>
-            <hr />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "30px 0px 0px 0px",
+            }}
+          >
+            <div style={{ width: "50%", height: "100%" }}>
+              <hr />
+            </div>
           </div>
           <InfiniteScroll
             dataLength={olderData.length}

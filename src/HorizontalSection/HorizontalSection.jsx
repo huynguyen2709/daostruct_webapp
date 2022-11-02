@@ -16,7 +16,7 @@ const HorizontalSection = ({ previousData }) => {
 export default HorizontalSection;
 
 const StyledContainer = styled(Container)`
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   overflow-x: auto;
 `;

@@ -11,11 +11,7 @@ const Header = () => {
         <Name>Nguyen Dinh Nhat Huy</Name>
       </LeftContent>
 
-      <RightContent>
-        <div style={{ width: "300px", height: "150px" }}>
-          Astronomy picture of the day
-        </div>
-      </RightContent>
+      <RightContent>Astronomy picture of the day</RightContent>
     </Container>
   );
 };
@@ -39,7 +35,11 @@ const LeftContent = styled.div`
 `;
 
 const RightContent = styled.div`
-  display: inline-block;
+  padding: 30px 30px;
+  display: inline;
+  color: white;
+  font-family: "nasa", sans-serif;
+  font-size: 40px;
 `;
 
 const Logo = styled.img`
@@ -48,7 +48,7 @@ const Logo = styled.img`
 `;
 
 const Name = styled.div`
-    font-size: large;
-    font-weight: 600;
-    color: white;
+  font-size: large;
+  font-weight: 600;
+  color: white;
 `;

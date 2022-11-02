@@ -27,6 +27,7 @@ const SpotLight = ({ lastestData }) => {
 export default SpotLight;
 
 const StyledContainer = styled(Container)`
+  margin-top: 30px;
   transition: all 0.5s ease-in-out;
 `;
 
