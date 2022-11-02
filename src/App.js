@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import SpotLight from "./SpotLight/SpotLight";
 import axios from "axios";
-import { getSpotLightData } from './utils/index'
+import { getSpotLightData, getSevenPrevious } from "./utils/index";
+import HorizontalSection from "./HorizontalSection/HorizontalSection";
 
 function App() {
   const [data, setData] = useState(null);
@@ -28,6 +29,7 @@ function App() {
     <div className="App">
       <Header />
       <SpotLight lastestData={getSpotLightData(data)} />
+      <HorizontalSection previousData={getSevenPrevious(data)}></HorizontalSection>
     </div>
   );
 }

@@ -7,3 +7,9 @@ export const truncateText = (text) => {
   const array = text?.split(".");
   return array?.[0] + "...";
 };
+
+export const getSevenPrevious = (data) => {
+  const getLast8Element = data?.slice(-8);
+  getLast8Element?.pop(); // After poping there's only 7 elements remain
+  return getLast8Element;
+};

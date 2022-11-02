@@ -44,6 +44,7 @@ const StyledRightCol = styled(Col)`
 `;
 
 const Image = styled.div`
+  cursor: pointer;
   ${(props) => props.url && `background-image: url(${props.url})`};
   background-position: center;
   background-repeat: no-repeat;
