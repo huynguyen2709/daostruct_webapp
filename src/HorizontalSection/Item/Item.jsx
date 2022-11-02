@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { getUrl } from "../../utils";
 
-function Item({ data }) {
+function Item({ data, setUrl, handleShow }) {
+  const handleOpenOveray = () => {
+    handleShow();
+    setUrl(getUrl(data));
+  };
   return (
-    <CardContainer>
+    <CardContainer onClick={handleOpenOveray}>
       <CardImage src={getUrl(data)} alt="Nasa Image" />
       <CardContent>
         <TitleText>{data?.title}</TitleText>

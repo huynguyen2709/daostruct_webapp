@@ -5,9 +5,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { getUrl, truncateText } from "../utils/index";
 
-const SpotLight = ({ lastestData }) => {
+const SpotLight = ({ lastestData, handleShow, setUrl }) => {
+  const handleOpenOveray = () => {
+    handleShow();
+    setUrl(getUrl(lastestData));
+  };
   return (
-    <StyledContainer>
+    <StyledContainer onClick={handleOpenOveray}>
       <Row>
         <StyledLeftCol xs={12} md={6} xl={5}>
           <ul>

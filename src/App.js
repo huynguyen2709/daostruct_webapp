@@ -11,8 +11,14 @@ import {
 import HorizontalSection from "./HorizontalSection/HorizontalSection";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "./commons/Loader";
+import Modal from "react-bootstrap/Modal";
 
 function App() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [url, setUrl] = useState(null);
+  //
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [olderData, setOlderData] = useState([]);
@@ -67,9 +73,15 @@ function App() {
         <Loader />
       ) : (
         <>
-          <SpotLight lastestData={getSpotLightData(data)} />
+          <SpotLight
+            lastestData={getSpotLightData(data)}
+            handleShow={handleShow}
+            setUrl={setUrl}
+          />
           <HorizontalSection
             previousData={getSevenPrevious(data)}
+            handleShow={handleShow}
+            setUrl={setUrl}
           ></HorizontalSection>
           <div
             style={{
@@ -90,7 +102,7 @@ function App() {
             loader={<Loader />}
             endMessage={
               <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all</b>
+                <b>There is no content to be displayed</b>
               </p>
             }
           >
@@ -98,11 +110,27 @@ function App() {
               <HorizontalSection
                 key={index}
                 previousData={elment}
+                handleShow={handleShow}
+                setUrl={setUrl}
               ></HorizontalSection>
             ))}
           </InfiniteScroll>
         </>
       )}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body
+          style={{
+            height: "500px",
+            width: "100%",
+            backgroundImage: `url(${url})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        ></Modal.Body>
+      </Modal>
     </div>
   );
 }

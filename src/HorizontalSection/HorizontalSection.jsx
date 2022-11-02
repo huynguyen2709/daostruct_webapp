@@ -3,11 +3,16 @@ import styled from "styled-components";
 import Container from "react-bootstrap/Container";
 import Item from "./Item/Item";
 
-const HorizontalSection = ({ previousData }) => {
+const HorizontalSection = ({ previousData, setUrl, handleShow }) => {
   return (
     <StyledContainer>
       {previousData?.map((element, index) => (
-        <Item key={index} data={element} />
+        <Item
+          handleShow={handleShow}
+          setUrl={setUrl}
+          key={index}
+          data={element}
+        />
       ))}
     </StyledContainer>
   );
