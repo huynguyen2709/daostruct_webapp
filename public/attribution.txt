@@ -1,3 +1,6 @@
 react-bootstrap
 styled-components
 axios
+dotenv
+react-infinite-scroll-component
+moment

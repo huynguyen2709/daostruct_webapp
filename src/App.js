@@ -2,22 +2,52 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import SpotLight from "./SpotLight/SpotLight";
 import axios from "axios";
-import { getSpotLightData, getSevenPrevious } from "./utils/index";
+import {
+  getSpotLightData,
+  getSevenPrevious,
+  subtractSevenDays,
+  listToMatrix,
+} from "./utils/index";
 import HorizontalSection from "./HorizontalSection/HorizontalSection";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "./commons/Loader";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [olderData, setOlderData] = useState([]);
+  const [olderDataMatrix, setOlderDataMatrix] = useState([]);
+  const [hasMore, sethasMore] = useState(true);
+  const [startDate, setStartDate] = useState("2022-10-15");
+  const [endDate, setEndDate] = useState("2022-10-21");
 
   const fetchDataOfNasa = async () => {
     try {
       const { data } = await axios.get(
-        "https://api.nasa.gov/planetary/apod?api_key=gaff4Pwpu0Qg6woyFty1YhVRxhj4In1ImvOCyFD7&start_date=2022-10-01&end_date=2022-10-29&thumbs=true"
+        `${process.env.REACT_APP_API_URL}api_key=${process.env.REACT_APP_API_KEY}&start_date=2022-10-01&end_date=2022-10-29&thumbs=true`
       );
-      console.log("this is data:", data);
+      setLoading(false);
       setData(data);
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+  };
+
+  const fetchOlderData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}api_key=${process.env.REACT_APP_API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`
+      );
+      setOlderData([...olderData, ...data]);
+      if (data.length === 0) {
+        sethasMore(false);
+      }
+      setStartDate(subtractSevenDays(startDate));
+      setEndDate(subtractSevenDays(endDate));
+      return data;
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -25,11 +55,45 @@ function App() {
     fetchDataOfNasa();
   }, []);
 
+  useEffect(() => {
+    const olderDataToDisplay = listToMatrix(olderData);
+    setOlderDataMatrix(olderDataToDisplay);
+  }, [olderData]);
+
   return (
     <div className="App">
       <Header />
-      <SpotLight lastestData={getSpotLightData(data)} />
-      <HorizontalSection previousData={getSevenPrevious(data)}></HorizontalSection>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <SpotLight lastestData={getSpotLightData(data)} />
+          <HorizontalSection
+            previousData={getSevenPrevious(data)}
+          ></HorizontalSection>
+          <div>
+            <hr />
+          </div>
+          <InfiniteScroll
+            dataLength={olderData.length}
+            next={fetchOlderData}
+            hasMore={hasMore}
+            loader={<Loader />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {olderDataMatrix?.map((elment, index) => (
+              <HorizontalSection
+                key={index}
+                previousData={elment}
+              ></HorizontalSection>
+            ))}
+          </InfiniteScroll>
+        </>
+      )}
     </div>
   );
 }
